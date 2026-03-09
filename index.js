@@ -59,8 +59,28 @@ app.get('/mascotas',(req,res)=>{
     })
     /* res.send({'proceso': 'GET'}) */
 })
-app.put('/mascotas',(req,res)=>{
-    res.send({'proceso': 'PUT'})
+//Se enviara el ID por la URL (endpoint)
+//Se enviara los datos por JSON
+app.put('/mascotas/:id',(req,res)=>{
+    const {id} = req.params
+    const {tipo,nombre,color,pesokg} =req.body
+    //Podemos escribir multilinea utilizando`
+    //COMODINES van en un indice
+    const sql = `UPDATE mascotas SET tipo=?,nombre=?,color=?,pesokg=? WHERE id =?`
+    db.query(sql, [tipo, nombre, color, pesokg, id],(err,results)=>{
+        if(err){
+            res.status(500).send({
+                seccess: false,
+                message: "No se concretó la actualizacion",
+                data: err
+            })
+        }
+
+        return res.send({
+            seccess: true,
+            message: "Registro actualizado"
+        })
+    })
 })
 
 //En un WS para eliminar un registro, pasamos la PK como parte de la ruta

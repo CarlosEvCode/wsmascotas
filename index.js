@@ -32,10 +32,32 @@ const PORT = 3000
 //req (requiere, requerimiento)
 //res (response,respuesta)
 app.post('/mascotas',(req,res)=>{
-    res.send({'proceso': 'POST'})
+    //Y los datos que queremos guardar? - DESERIALIZACION
+    const {tipo,nombre,color,pesokg} = req.body
+    //? = comodin, evita ataques por SQLinjection
+    const sql = "INSERT INTO mascotas (tipo,nombre,color,pesokg) VALUES (?,?,?,?)"
+
+    db.query(sql,[tipo,nombre,color,pesokg],(err,results) =>{
+        if(err) return res.status(500).send({
+            success:false,
+            message: 'No se concretó el registro'
+        })
+
+        //Qué hacemos cuando logramos registrar?
+        res.send({
+            success: true,
+            message: 'Nueva mascota registrada',
+            id: results.insertId
+        })
+    })
 })
 app.get('/mascotas',(req,res)=>{
-    res.send({'proceso': 'GET'})
+    const sql = "SELECT * FROM mascotas LIMIT 10"
+    db.query(sql,(err,results)=>{
+        if(err) return res.status(500).send({message: 'Error acceso a datos'})
+        res.json(results)
+    })
+    /* res.send({'proceso': 'GET'}) */
 })
 app.put('/mascotas',(req,res)=>{
     res.send({'proceso': 'PUT'})

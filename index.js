@@ -62,8 +62,27 @@ app.get('/mascotas',(req,res)=>{
 app.put('/mascotas',(req,res)=>{
     res.send({'proceso': 'PUT'})
 })
-app.delete('/mascotas',(req,res)=>{
-    res.send({'proceso': 'DELETE'})
+
+//En un WS para eliminar un registro, pasamos la PK como parte de la ruta
+//Ejemplo: DELETE - miwebservice.com/clientes/1
+app.delete('/mascotas/:id',(req,res)=>{
+    //De dónde obtenemos el ID a borrar? => ENDPOINT (URL)
+    const {id} = req.params
+    const sql = "DELETE FROM mascotas WHERE id = ?"
+    db.query(sql,[id], (err,results)=>{
+        //Clausula de GUARDA / retorno temprano
+        if(err){
+            res.status(500).send({
+                seccess: false,
+                message: 'No se puede eliminar el registro'
+            })
+        }
+
+        res.send({
+            success: true,
+            message: 'Eliminado correctamente'
+        })
+    })
 })
 
 app.listen(PORT, ()=>{

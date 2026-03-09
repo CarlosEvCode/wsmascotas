@@ -77,11 +77,19 @@ app.delete('/mascotas/:id',(req,res)=>{
                 message: 'No se puede eliminar el registro'
             })
         }
+        
+        if(results.affectedRows==0){
+            return res.status(404).send({
+            success: false,
+            message: 'No existe la mascota'
+            })
+        }
 
-        res.send({
+        return res.send({
             success: true,
             message: 'Eliminado correctamente'
         })
+        
     })
 })
 

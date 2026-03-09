@@ -26,7 +26,8 @@ const PORT = 3000
 //VERBO = ACCION = INTENCION
 //GET   :Leer
 //POST  :Crear
-//PUT   :Actualizar
+//PUT   :Actualizar todo
+//PATCH :Actualizacion parcial
 //DELETE:Eliminar
 
 //req (requiere, requerimiento)

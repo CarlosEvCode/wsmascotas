@@ -3,6 +3,7 @@
 
 1. Clonar el repositorio
 2. Restaurar carpeta node_modules: **npm install**
+3. Configurar credenciales de conexion en tu archivo .env (Guiarse del .env.example)
 3. Abrir la terminal CTRL + Ñ (VSCode)
 4. Ejecutar node index.js
 5. Verificar funcionalidad desde Postman, ThunderClient,etc

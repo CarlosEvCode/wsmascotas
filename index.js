@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express') //Framework
 const mysql = require('mysql2') // Acceso BD
 const bodyParser = require('body-parser') //Interactuar con JSON
@@ -7,10 +8,11 @@ app.use(bodyParser.json())
 
 //Configuracion de acceso - .env
 const db = mysql.createConnection({
-    host:       'localhost',
-    user:       'root',
-    password:   '',
-    database:   'dbmascotas'
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    port: process.env.DB_PORT || 3306
 })
 
 //Aperturar la conexion
@@ -20,7 +22,7 @@ db.connect((err) =>{
 })
 
 //Iniciar el servidor
-const PORT = 3000
+const PORT = process.env.PORT || 3000
 
 ///* SERVICIOS WEB */
 //VERBO = ACCION = INTENCION
